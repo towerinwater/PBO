@@ -1,9 +1,15 @@
 # Ignore everything
 *
 
-# Except for submission files
-!.gitignore
+# Except for the folders
 !pdfs/
 !src/
+
+# Except for contents inside the folders
+!pdfs/**
+!src/**
+
+# Except for submission files
+!.gitignore
 !requirements.txt
 !README.md
