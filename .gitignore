@@ -1,3 +1,9 @@
-env/
-data/
-uploads/
+# Ignore everything
+*
+
+# Except for submission files
+!.gitignore
+!pdfs/
+!src/
+!requirements.txt
+!README.md
