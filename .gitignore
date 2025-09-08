@@ -5,11 +5,13 @@
 !pdfs/
 !src/
 !plots/
+!ideas/
 
 # Except for contents inside the folders
 !pdfs/**
 !src/**
 !plots/**
+!ideas/**
 
 # Except for submission files
 !.gitignore
