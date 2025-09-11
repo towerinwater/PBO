@@ -6,7 +6,6 @@ import numpy as np
 # Please replace this `random search` by your `genetic algorithm`.
 
 def random_search(func, budget = None): # Here, func is a predefined optimisation problem, e.g, F1 = OneMax. 
-
     # budget (number of function evaluations) of each run: 50n^2
     if budget is None:
         budget = int(func.meta_data.n_variables * func.meta_data.n_variables * 50)
@@ -47,6 +46,8 @@ lo = get_problem(fid = 2, dimension=50, instance=1, problem_class = ProblemClass
 labs = get_problem(fid = 18, dimension=50, instance=1, problem_class = ProblemClass.PBO)
 
 
+
+
 # Create default logger compatible with IOHanalyzer
 # `root` indicates where the output files are stored.
 # `folder_name` is the name of the folder containing all output. You should compress this folder and upload it to IOHanalyzer
@@ -62,8 +63,8 @@ random_search(om)
 lo.attach_logger(l)
 random_search(lo)
 
-labs.attach_logger(l)
-random_search(labs)
+# labs.attach_logger(l)
+# random_search(labs)
 
 # This statemenet is necessary in case data is not flushed yet.
 del l
