@@ -37,13 +37,13 @@ def random_search(func, budget = None): # Here, func is a predefined optimisatio
                 break
         func.reset()
     
-    return f_opt, x_opt
+    return f_opt, x_opt # type: ignore
 
 # Declaration of problems to be tested; F1 = OneMax; F2 = LeadingOnes; F18 = LABS: 
 # dimension = number of variables
-om = get_problem(fid = 1, dimension=50, instance=1, problem_class = ProblemClass.PBO)
-lo = get_problem(fid = 2, dimension=50, instance=1, problem_class = ProblemClass.PBO)
-labs = get_problem(fid = 18, dimension=50, instance=1, problem_class = ProblemClass.PBO)
+om = get_problem(fid = 1, dimension=50, instance=1, problem_class = ProblemClass.PBO) # pyright: ignore[reportCallIssue]
+lo = get_problem(fid = 2, dimension=50, instance=1, problem_class = ProblemClass.PBO) # pyright: ignore[reportCallIssue]
+labs = get_problem(fid = 18, dimension=50, instance=1, problem_class = ProblemClass.PBO) # pyright: ignore[reportCallIssue]
 
 
 
@@ -51,13 +51,16 @@ labs = get_problem(fid = 18, dimension=50, instance=1, problem_class = ProblemCl
 # Create default logger compatible with IOHanalyzer
 # `root` indicates where the output files are stored.
 # `folder_name` is the name of the folder containing all output. You should compress this folder and upload it to IOHanalyzer
-l = logger.Analyzer(root="data", 
+l = logger.Analyzer(root="data",  # type: ignore
     folder_name="run", 
     algorithm_name="random_search", 
     algorithm_info="test of IOHexperimenter in python")
 
+input("Enter to start experiments...")
 
 om.attach_logger(l)
+
+input()
 random_search(om)
 
 lo.attach_logger(l)
