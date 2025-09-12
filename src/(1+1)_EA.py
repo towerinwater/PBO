@@ -13,16 +13,15 @@ class OnePlusOneEA:
     def __call__(self, problem: ioh.problem.PBO) -> None:
         current = np.random.randint(0, 2, size=problem.meta_data.n_variables)
         current_fitness: float = problem(current.tolist())
-        num_evaluations: int = 1
 
-        while num_evaluations < self.budget:
+
+        for _ in range(self.budget):
             offspring = current.copy() 
             for i in range(problem.meta_data.n_variables):
                 if np.random.rand() < 1.0 / problem.meta_data.n_variables:
                     offspring[i] = 1 - offspring[i]  # Flip bit
 
                 offspring_fitness = problem(offspring.tolist())
-                num_evaluations += 1
 
 
                 # if the offspring is better or equal, replace parent
