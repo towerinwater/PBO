@@ -12,7 +12,6 @@
 !src/**
 !plots/**
 !ideas/**
-!final_temporary/
 
 
 # Except for submission files
@@ -21,5 +20,10 @@
 !README.md
 
 
-.venv/
+!algorithms/**/*.py
+!config.py
+!final_temporary/*
+
+
+/.venv/
 /uv.lock

@@ -1,0 +1,3 @@
+The /src directory will be used as a "playground" for testing out the algorithms that you have implemented inside the "algorithms" directory. 
+
+We can rename it to /test if required.
