@@ -1,0 +1,3 @@
+suite = "unknown_suite", funcId = 18, funcName = "LABS", DIM = 100, maximization = "T", algId = "OnePlusOneEA", algInfo = "(1+1) Evolutionary Algorithm"
+%
+data_f18_LABS/IOHprofiler_f18_DIM100.dat, 1:20305|3.66032, 1:26913|4.74383, 1:20043|4.13223, 1:9750|4.25894, 1:46347|4.06504, 1:81855|4.55373, 1:34372|4.06504, 1:2449|4.17362, 1:32624|3.98724, 1:50816|3.98724

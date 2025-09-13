@@ -1,29 +1,3 @@
-# Ignore everything
-*
-
-# Except for the folders
-!pdfs/
-!src/
-!plots/
-!ideas/
-
-# Except for contents inside the folders
-!pdfs/**
-!src/**
-!plots/**
-!ideas/**
-
-
-# Except for submission files
-!.gitignore
-!requirements.txt
-!README.md
-
-
-!algorithms/**/*.py
-!config.py
-!final_temporary/*
-
-
 /.venv/
 /uv.lock
+    

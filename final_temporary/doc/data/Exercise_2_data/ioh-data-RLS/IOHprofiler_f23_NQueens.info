@@ -1,0 +1,3 @@
+suite = "unknown_suite", funcId = 23, funcName = "NQueens", DIM = 100, maximization = "T", algId = "RLS", algInfo = "Randomized Local Search"
+%
+data_f23_NQueens/IOHprofiler_f23_DIM100.dat, 1:606|9, 1:219|8, 1:514|9, 1:345|9, 1:374|8, 1:322|8, 1:306|8, 1:329|9, 1:277|9, 1:459|8
