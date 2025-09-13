@@ -18,5 +18,5 @@ ALGORITHMS = [
     RandomSearch(budget=BUDGET),
     OnePlusOneEA(budget=BUDGET),
     RandomizedLocalSearch(budget=BUDGET),
-    DesignedGA(budget=BUDGET, population_size=20, mutation_rate=0.01)
+    # DesignedGA(budget=BUDGET, population_size=20, mutation_rate=0.01)
 ]
