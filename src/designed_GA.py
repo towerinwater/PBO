@@ -8,25 +8,66 @@ Applying a genetic algorithm to find the optimum solution of some predefined pro
 The GA uses uniform crossover, mutation, and a parent population of at least 10 individuals. 
 '''
 
-def roulette_select(pop: np.ndarray) -> np.ndarray:
+def roulette_select(func, pop: np.ndarray) -> np.ndarray:
     '''
     Helper function to perform roulette wheel selection, given a population of
     individuals, then return p_size parents. 
     '''
 
+    # Calculate sum of fitnesses of each individual 
+    fit_sum = 0         
+    for i in range(len(pop)): 
+        fit_sum += func(pop[i]) 
+
+    # Define probabilities of selection
+    problt = []
+    for i in range(len(pop)): 
+        problt.append(func(pop[i])/fit_sum)      
+
+    # Select parents by roulette wheel selection w/ replacement
+    parent_pop = np.random.choice(pop, size = len(pop), p = problt, replace = True)
+
     return parent_pop
 
-def uniform_crossover(pop: np.ndarray, p_c = 0.7) -> np.ndarray: 
+def uniform_crossover(func, pop: np.ndarray) -> np.ndarray: 
     '''
     Helper function to perform uniform crossover on each consecutive pair of a
-    given population with probability p_c, returning a population where 
+    given population, returning a population where 
     parents are replaced by offspring. 
     '''
 
+    # Initialise population of offspring and loop counter
+    crsd_pop = np.zeros(len(pop), dtype = np.ndarray)
+    i = 0
+
+    # Loop through each pair in the given parent population 
+    while i < len(pop) - 1: 
+
+        # Initialise pair of offsprings 
+        child1 = np.zeros(func.meta_data.n_variables, dtype = int)
+        child2 = np.zeros(func.meta_data.n_variables, dtype = int)
+
+        # Loop through each element of the parents
+        for j in range(func.meta_data.n_variables):
+            # Randomly pick each gene of the first offspring from parent pair 
+            child1[j] = np.random.choice([pop[i][j], pop[i + 1][j]])
+
+            # Construct second offspring as the inverse of the first 
+            if child1[j] == 0: 
+                child2[j] = 1
+            else: 
+                child2[j] = 0
+
+            # Add children to population of offspring 
+            crsd_pop[i] = child1 
+            crsd_pop[i + 1] = child2 
+
+        # Increment counter
+        i += 2
 
     return crsd_pop 
 
-def mutate(ind: np.ndarray) -> np.ndarray:
+def mutate(func, ind: np.ndarray) -> np.ndarray:
     '''
     Helper function to perform bit mutation on an operator, then returning
     an offspring. 
@@ -34,10 +75,10 @@ def mutate(ind: np.ndarray) -> np.ndarray:
 
     return mutated 
 
-def genetic_algorithm(func, budget = None, p_size = 10): 
+def genetic_algorithm(func, budget = None, p_size = 4): 
 
-    # Assure population size is even        ???
-    if (p_size % 2 != 0): 
+    # Assure population size is even        ???###############
+    if (p_size % 2 != 0 or p_size < 1): 
         print("Invalid population size.")
         return 
 
@@ -71,16 +112,16 @@ def genetic_algorithm(func, budget = None, p_size = 10):
             f = func(x) # evaluate array x, finding it's optimum
 
             # Define new population of parents by roulette wheel selection 
-            parent_pop = roulette_select(pop)
+            parent_pop = roulette_select(func, pop)
 
             # Perform uniform crossover on each consecutive pair in the new parent population
-            offspring_pop = uniform_crossover(parent_pop)
+            offspring_pop = uniform_crossover(func, parent_pop)
 
             # Mutate the resulting offspring by some probability 1/p_size 
-            m_offspring_pop = mutate(offspring_pop)
+            m_offspring_pop = mutate(func, offspring_pop)
             pop = m_offspring_pop # Redefine population
-
-            # Evaluate population for its optimum (i.e., the highest fitness/value of population)
+            
+            # Evaluate population for its optimum (i.e., the highest fitness/value of an individual in the population)
             f = func(pop[0])
             x = pop[0]
             for j in range(p_size):
@@ -98,44 +139,10 @@ def genetic_algorithm(func, budget = None, p_size = 10):
         # Reset function
         func.reset() 
 
+        print(f"Run {r + 1} of complete!")
+
     # Return optimal fitness/value 'f_opt' and corresponding array 'x_opt' 
     return f_opt, x_opt 
-    
-    
-
-    
-
-
-    '''
-    # For a known problem 18 w/ 32 variables, we know optimum = 8
-    if func.meta_data.problem_id == 18 and func.meta_data.n_variables == 32:
-        optimum = 8
-    else:
-        optimum = func.optimum.y # otherwise, calculate optimum???
-    print(optimum)
-
-
-    # 10 independent runs for each algorithm on each problem.
-    for r in range(10):
-        f_opt = sys.float_info.min # initialise optimum value 
-        x_opt = None    # initialise optimum array 
-        
-        # Loop of function evaluations: 
-        for i in range(budget):
-            x = np.random.randint(2, size = func.meta_data.n_variables)  # random array of size n_variables in the range [0, 2)
-                                                                         # i.e., randomised binary string
-            f = func(x) # evaluate array x, finding it's optimum
-            
-            if f > f_opt:
-                f_opt = f
-                x_opt = x
-
-            if f_opt >= optimum:
-                break
-        func.reset() 
-
-    return f_opt, x_opt
-    '''
 
 # Declaration of problems to be tested; F1 = OneMax; F2 = LeadingOnes; F18 = LABS: 
 # dimension = number of variables
@@ -153,12 +160,15 @@ l = logger.Analyzer(root="data",
     algorithm_info="test of IOHexperimenter in python")
 
 
+print("Optimising F1: ")
 om.attach_logger(l)
 genetic_algorithm(om)
 
+##print("Optimising F2: ")
 lo.attach_logger(l)
 ##genetic_algorithm(lo)
 
+##print("Optimising F18: ")
 labs.attach_logger(l)
 ##genetic_algorithm(labs)
 
