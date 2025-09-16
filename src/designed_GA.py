@@ -73,19 +73,20 @@ def mutate(func, ind: np.ndarray) -> np.ndarray:
     an offspring. 
     '''
 
+    
+
     return mutated 
 
 def genetic_algorithm(func, budget = None, p_size = 4): 
 
-    # Assure population size is even        ???###############
+    # Assure population size is even 
     if (p_size % 2 != 0 or p_size < 1): 
-        print("Invalid population size.")
+        print("Invalid population size. Must be even and non-zero")
         return 
 
-
-    # Define budget (number of function evaluations) of each run: 50n^2
+    # Define budget (number of function evaluations) of each run: 10^5
     if budget is None:
-        budget = int(func.meta_data.n_variables * func.meta_data.n_variables * 50)
+        budget = int(pow(10, 5))
 
     # Print default optimum of the given problem 
     if func.meta_data.problem_id == 18 and func.meta_data.n_variables == 32: # for a known problem instance
@@ -146,9 +147,9 @@ def genetic_algorithm(func, budget = None, p_size = 4):
 
 # Declaration of problems to be tested; F1 = OneMax; F2 = LeadingOnes; F18 = LABS: 
 # dimension = number of variables
-om = get_problem(fid = 1, dimension=50, instance=1, problem_class = ProblemClass.PBO)
-lo = get_problem(fid = 2, dimension=50, instance=1, problem_class = ProblemClass.PBO)
-labs = get_problem(fid = 18, dimension=50, instance=1, problem_class = ProblemClass.PBO)
+om = get_problem(fid = 1, dimension=100, instance=1, problem_class = ProblemClass.PBO)
+lo = get_problem(fid = 2, dimension=100, instance=1, problem_class = ProblemClass.PBO)
+labs = get_problem(fid = 18, dimension=100, instance=1, problem_class = ProblemClass.PBO)
 
 
 # Create default logger compatible with IOHanalyzer
