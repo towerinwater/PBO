@@ -72,17 +72,16 @@ def mutate(func, ind: np.ndarray) -> np.ndarray:
     Helper function to perform bit mutation on an operator, then returning
     an offspring. 
     '''
+    pop_size = len(ind)
     n = func.meta_data.n_variables
-    mutation_rate = 1.0 / n
+    mutation_rate = 1 / n #mutation probability
 
-    # Copy to avoid overwrite
-    mutated = np.copy(ind)
-
-    # Flip each bit with probability mutation_rate
-    flip_mask = np.random.rand(n) < mutation_rate
-    mutated = np.bitwise_xor(mutated, flip_mask.astype(int))
-    
-    return mutated 
+    mutated = ind.copy()
+    for i in range(pop_size):
+        for j in range(n):
+            if np.random.rand() < mutation_rate:
+                mutated[i][j] = 1 - mutated[i][j]  # Flip bit
+    return mutated
 
 def genetic_algorithm(func, budget = None, p_size = 4): 
 
