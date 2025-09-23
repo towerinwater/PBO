@@ -69,8 +69,10 @@ def uniform_crossover(func, pop: np.ndarray) -> np.ndarray:
 
 def mutate(func, ind: np.ndarray) -> np.ndarray:
     '''
-    Helper function to perform bit mutation on an operator, then returning
-    an offspring. 
+    Helper function to perform bit mutation on each individual in a population, where 
+    the mutation parameter determines chance of mutating each entire individual. 
+    The mutated population is returned. 
+    # ('ind' should be 'pop')!
     '''
     pop_size = len(ind)
     n = func.meta_data.n_variables
