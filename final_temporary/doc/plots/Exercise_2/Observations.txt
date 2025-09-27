@@ -1,0 +1,13 @@
+Let us begin with problem (with fid) 1. It is worth noting that the x-axis has been log-scaled and y-axis stays the same. 
+Although the trend is expected, it is worthwhile to go through it in details (as we should always do). 
+Right away, we can observe that RandomSearch performs the worst out of the other two. 
+Random search basically guesses the solution (randomly) and for the first few number of iterations/function evaluations, 
+it may get lucky and stumble upon a good solution (in this case, one with the highest number of ones). 
+In fact, right after the first evaluation, it achieves a better fitness than RLS. 
+However, from the 10th evaluation onwards, the its random guessing just does not cut it. 
+It gets surpassed by both algorithms by the 30th evaluation. On the other hand, (1+1)-EA initially got an upper hand over RLS 
+until the 20th evaluation which it then gets supplanted and just cannot catch up afterwards. One reason for this is that RLS 
+is practically perfect for our OneMax problem -- it only accepts improvement after flipping, although random, bit. Whereas, (1+1)-EA 
+attempts to flip all N = 100 bits at a time (with uniform probability 1/n = 0.01), 
+it will inadvertently mis-flip some bits from 1 to 0 early on but as time goes on, it learns to flip less bits, being more careful,
+and practically behaves like RLS towards the end (hence they converge after the 1000th evaluation). 
