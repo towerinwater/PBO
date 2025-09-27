@@ -12,4 +12,4 @@ class Algorithm:
 
     def __call__(self, problem: ioh.problem.PBO) -> None:
         # This method should be overridden by subclasses to implement specific algorithm logic.
-        raise NotImplementedError("This method should be overridden by subclasses's __call__() method.")
+        raise NotImplementedError(f"This method should be overridden by subclasses's __call__() method with the given problem: {problem}.")
