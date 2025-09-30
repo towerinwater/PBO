@@ -7,6 +7,7 @@ class RandomizedLocalSearch(Algorithm):
         super().__init__(budget, name="Randomized Local Search", algorithm_info="Randomized Local Search Algorithm.")
 
     def __call__(self, problem: ioh.problem.PBO) -> None:
+        # Randomised Local Search implementation (not including the external loop for multiple runs)
         current_sol = np.random.randint(0,2 , size=problem.meta_data.n_variables)
         current_fitness = problem(current_sol.tolist())
 

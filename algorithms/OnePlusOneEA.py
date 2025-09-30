@@ -8,7 +8,7 @@ class OnePlusOneEA(Algorithm):
         super().__init__(budget, name="(1+1)_EA", algorithm_info="(1+1) Evolutionary Algorithm.")
 
     def __call__(self, problem: ioh.problem.PBO):
-        # Implement the (1+1) EA algorithm logic here
+        # (1+1) EA implementation (not including the external loop for multiple runs)
         n = problem.meta_data.n_variables
         # Initialize a random solution
         current = np.random.randint(0, 2, size=n)
