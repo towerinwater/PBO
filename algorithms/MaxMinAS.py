@@ -129,16 +129,16 @@
 
 import ioh
 import numpy as np
-from algorithm_interface import Algorithm
+from .algorithm_interface import Algorithm
 
-class ACO(Algorithm):
+class MaxMinAS(Algorithm):
     """
-    Ant Colony Optimization (ACO) algorithm implementation.
+    Max-Min Ant System (MMAS) algorithm implementation.
     """
     def __init__(self, 
                  budget: int, # number of iteration 
-                 name: str = "ACO",
-                 algorithm_info: str = "Ant Colony Optimization Algorithm",
+                 name: str = "MaxMinAS",
+                 algorithm_info: str = "Max-Min Ant System Algorithm",
                  number_of_ants: int = 10, # at least 10 ants
                  C: float = 1.0, # pheromone deposit ,
                  evaporate_rate: float = 0.01 # pheromone evaporation rate (rho)
@@ -203,9 +203,13 @@ class ACO(Algorithm):
         global_best_solution = np.random.randint(0, 2, size=n)
         global_best_fitness = problem(global_best_solution.tolist())
 
+
+        delta_tau = -np.inf
+        
+        
         ### main loop
         while problem.state.evaluations < self.budget:
-            for ant in range(self.number_of_ants):
+            for _ in range(self.number_of_ants):
                 # solution construction
                 solution = np.zeros(n, dtype=int)
 
