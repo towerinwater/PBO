@@ -1,4 +1,4 @@
-from algorithm_interface import Algorithm
+from .algorithm_interface import Algorithm
 import ioh
 import numpy as np
 

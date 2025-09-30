@@ -1,6 +1,5 @@
-#!/usr/bin/env python3
 """
-Comprehensive test suite for genetic algorithm correctness
+Test suite for genetic algorithm correctness
 """
 
 import numpy as np
