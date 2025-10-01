@@ -35,3 +35,14 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
+# Example usage:
+# Suppose we want to test 2 algorithms: Random Search and RLS on 3 problems: OneMax, LeadingOnes, and N-Queens.
+# 2 * 3 = 6 data files will be generated. 
+# To pass ALL of this data into the IOHProfiler (https://iohanalyzer.liacs.nl/), the following procedure can be used:
+# Simplest: Compress the /data directory into a single zip file. And then pass the zip file to the IOHProfiler. Then we just need to click on the "Fixed Budget Results" tab to see the results.
+# Or, we can zip each data file one by one and then pass them into (in no particular order) the IOHProfiler ... 
+#
