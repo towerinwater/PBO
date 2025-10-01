@@ -67,22 +67,22 @@ def uniform_crossover(func, pop: np.ndarray) -> np.ndarray:
 
     return crsd_pop 
 
-def mutate(func, ind: np.ndarray) -> np.ndarray:
+def mutate(func, pop: np.ndarray) -> np.ndarray:
     '''
     Helper function to perform bit mutation on each individual in a population, where 
     the mutation parameter determines chance of mutating each entire individual. 
     The mutated population is returned. 
     # ('ind' should be 'pop')!
     '''
-    pop_size = len(ind)
+
     n = func.meta_data.n_variables
     mutation_rate = 1 / n #mutation probability
 
-    mutated = ind.copy()
-    for i in range(pop_size):
+    mutated = pop.copy()
+    for i in range(len(pop)):
         for j in range(n):
             if np.random.rand() < mutation_rate:
-                mutated[i][j] = 1 - mutated[i][j]  # Flip bit
+                mutated[i][j] = 1 - mutated[i][j]
     return mutated
 
 def genetic_algorithm(func, budget = None, p_size = 4): 
