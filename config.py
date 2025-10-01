@@ -11,13 +11,20 @@ PROBLEM_IDS = [1, 2]   # problem IDs to be used in the experiments (e.g., 1 -> O
 PROBLEMS_TYPE = ioh.ProblemClass.PBO  # Pseudo-Boolean Optimization problems
 
 
+# we need to run mmas on the above problems with different values of rhos
 
 
 
-# a list of algorithm instances to run 
+# a list of algorithm instances to run
 ALGORITHMS = [
     RandomSearch(budget=BUDGET),
-    MaxMinAS(budget=BUDGET)
+    MaxMinAS(budget=BUDGET,
+              name="MaxMinAS",
+              algorithm_info="Max-Min Ant System with Local Search",
+              number_of_ants=20,
+              Q=1.0,
+              rho=0.1, # pheromone evaporation rate 
+              ),
     # OnePlusOneEA(budget=BUDGET),
     # RandomizedLocalSearch(budget=BUDGET),
     # DesignedGA(budget=BUDGET, population_size=20, mutation_rate=0.01)

@@ -11,15 +11,18 @@ class MaxMinAS(Algorithm):
                  name: str = "MaxMinAS",
                  algorithm_info: str = "Max-Min Ant System Algorithm",
                  number_of_ants: int = 10, # at least 10 ants
-                 C: float = 1.0, # pheromone deposit ,
-                 evaporate_rate: float = 0.01 # pheromone evaporation rate (rho)
+                 Q: float = 1.0, # pheromone deposit ,
+                 rho: float = 0.01 # pheromone evaporation rate (rho)
                  ):
         super().__init__(budget, name, algorithm_info)
         self.number_of_ants = number_of_ants
-        self.C = C
-        self.evaporation_rate = evaporate_rate
+        self.Q = Q
+        self.rho = rho
+        if self.number_of_ants < 10:
+            raise ValueError("Number of ants must be at least 10.")
+        if not (0 <= self.rho <= 1):
+            raise ValueError("Evaporation rate must be in the range [0, 1].")
 
-        
     def _local_search(self, solution, problem: ioh.problem.PBO) -> tuple[np.ndarray, float]:
         """
         Perform a greedy local search on the given solution.
@@ -66,7 +69,7 @@ class MaxMinAS(Algorithm):
 
         ### initialise setup
         # use a common MMAS heeuristic for phermone limits 
-        tau_max = 1 / self.evaporation_rate 
+        tau_max = 1 / self.rho
         tau_min = tau_max / (2 * n)
 
         # pheromone matrix (n x 2), initialise to tau_max to encourage exploration
@@ -112,10 +115,10 @@ class MaxMinAS(Algorithm):
                 
                 ### pheromone update (only for the current ant)
                 # evaporation
-                tau = (1 - self.evaporation_rate) * tau
+                tau = (1 - self.rho) * tau
 
                 # deposit / reinforment (only on the bits used in the solution)
-                delta_tau = self.C # this sets the amount of new pheromone to add
+                delta_tau = self.Q # this sets the amount of new pheromone to add
 
             # pheromone deposit for the global best solution found so far
             for i in range(n):
