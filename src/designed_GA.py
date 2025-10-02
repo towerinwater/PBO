@@ -29,6 +29,26 @@ def roulette_select(func, pop: np.ndarray) -> np.ndarray:
 
     return parent_pop
 
+
+def tournament_select(func, pop: np.ndarray, num = 4) -> np.ndarray:
+    '''
+    Helper function to perform tournament selection, given a population of
+    individuals, then return p_size parents. 
+    '''
+
+    parent_pop = np.zeros(len(pop), dtype=np.ndarray)
+
+    for i in range(len(pop)):
+        # Randomly pick subset of individuals
+        subset = np.random.choice(pop, size=num, replace=False) 
+        
+        # Evaluate fitness of the subset
+        sub_fitnesses = [func(ind) for ind in subset]
+        best_idx = np.argmax(sub_fitnesses)
+        parent_pop[i] = subset[best_idx]
+
+    return parent_pop
+
 def uniform_crossover(func, pop: np.ndarray) -> np.ndarray: 
     '''
     Helper function to perform uniform crossover on each consecutive pair of a
@@ -58,9 +78,9 @@ def uniform_crossover(func, pop: np.ndarray) -> np.ndarray:
             else: 
                 child2[j] = 0
 
-            # Add children to population of offspring 
-            crsd_pop[i] = child1 
-            crsd_pop[i + 1] = child2 
+        # Add children to population of offspring 
+        crsd_pop[i] = child1 
+        crsd_pop[i + 1] = child2 
 
         # Increment counter
         i += 2
@@ -72,11 +92,10 @@ def mutate(func, pop: np.ndarray) -> np.ndarray:
     Helper function to perform bit mutation on each individual in a population, where 
     the mutation parameter determines chance of mutating each entire individual. 
     The mutated population is returned. 
-    # ('ind' should be 'pop')!
     '''
 
     n = func.meta_data.n_variables
-    mutation_rate = 1 / n #mutation probability
+    mutation_rate = 1.5 / n #mutation probability
 
     mutated = pop.copy()
     for i in range(len(pop)):
@@ -85,7 +104,7 @@ def mutate(func, pop: np.ndarray) -> np.ndarray:
                 mutated[i][j] = 1 - mutated[i][j]
     return mutated
 
-def genetic_algorithm(func, budget = None, p_size = 4): 
+def genetic_algorithm(func, budget = None, p_size = 30): 
 
     # Assure population size is even 
     if (p_size % 2 != 0 or p_size < 1): 
@@ -104,24 +123,24 @@ def genetic_algorithm(func, budget = None, p_size = 4):
     print(optimum)
     
 
-    # Randomly initialise population of p_size individuals
-    pop = np.zeros(p_size, dtype = np.ndarray)
-    for i in range(p_size):
-        pop[i] = np.random.randint(2, size = func.meta_data.n_variables)
-
     # 10 independent runs for each algorithm on each problem. 
     for r in range(10):
+        # Randomly initialise population of p_size individuals
+        pop = np.zeros(p_size, dtype = np.ndarray)
+        for i in range(p_size):
+            pop[i] = np.random.randint(2, size = func.meta_data.n_variables)
+        
         f_opt = sys.float_info.min # initialise optimum as the lowest possible value  
         x_opt = None    # initialise corresponding optimum array 
 
         # Loop of function evaluations: 
         for i in range(budget):
-            x = np.random.randint(2, size = func.meta_data.n_variables)  # random array of size n_variables in the range [0, 2)
+            #x = np.random.randint(2, size = func.meta_data.n_variables)  # random array of size n_variables in the range [0, 2)
                                                                          # i.e., randomised binary string
-            f = func(x) # evaluate array x, finding it's optimum
+            #f = func(x) # evaluate array x, finding it's optimum
 
             # Define new population of parents by roulette wheel selection 
-            parent_pop = roulette_select(func, pop)
+            parent_pop = tournament_select(func, pop)
 
             # Perform uniform crossover on each consecutive pair in the new parent population
             offspring_pop = uniform_crossover(func, parent_pop)
@@ -131,12 +150,10 @@ def genetic_algorithm(func, budget = None, p_size = 4):
             pop = m_offspring_pop # Redefine population
             
             # Evaluate population for its optimum (i.e., the highest fitness/value of an individual in the population)
-            f = func(pop[0])
-            x = pop[0]
-            for j in range(p_size):
-                if f > func(pop[j]): 
-                    f = func(pop[j])
-                    x = pop[j]
+            fitnesses = [func(ind) for ind in pop]
+            best_idx = np.argmax(fitnesses)
+            f = fitnesses[best_idx]
+            x = pop[best_idx]
 
             if f > f_opt:
                 f_opt = f
@@ -148,7 +165,7 @@ def genetic_algorithm(func, budget = None, p_size = 4):
         # Reset function
         func.reset() 
 
-        print(f"Run {r + 1} of complete!")
+        print(f"Run {r + 1} of 10 complete!")
 
     # Return optimal fitness/value 'f_opt' and corresponding array 'x_opt' 
     return f_opt, x_opt 
@@ -181,5 +198,5 @@ lo.attach_logger(l)
 labs.attach_logger(l)
 ##genetic_algorithm(labs)
 
-# This statemenet is necessary in case data is not flushed yet.
+# This statement is necessary in case data is not flushed yet.
 del l
