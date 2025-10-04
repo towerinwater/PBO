@@ -1,6 +1,6 @@
 import ioh
 import numpy as np
-from algorithm_interface import Algorithm
+from .algorithm_interface import Algorithm
 
 class ACO(Algorithm):
     """

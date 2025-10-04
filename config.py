@@ -1,4 +1,4 @@
-from algorithms import OnePlusOneEA, RandomizedLocalSearch, RandomSearch, DesignedGA
+from algorithms import OnePlusOneEA, RandomizedLocalSearch, RandomSearch, DesignedGA, ACO
 import ioh
 
 
@@ -15,8 +15,9 @@ PROBLEMS_TYPE = ioh.ProblemClass.PBO  # Pseudo-Boolean Optimization problems
 
 # a list of algorithm instances to run 
 ALGORITHMS = [
-    RandomSearch(budget=BUDGET),
-    OnePlusOneEA(budget=BUDGET),
-    RandomizedLocalSearch(budget=BUDGET),
+    # RandomSearch(budget=BUDGET),
+    # OnePlusOneEA(budget=BUDGET),
+    # RandomizedLocalSearch(budget=BUDGET),
     # DesignedGA(budget=BUDGET, population_size=20, mutation_rate=0.01)
+    ACO(budget=BUDGET)
 ]

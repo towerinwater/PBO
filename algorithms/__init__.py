@@ -3,6 +3,7 @@ from .OnePlusOneEA import OnePlusOneEA
 from .RLS import RandomizedLocalSearch
 from .RandomSearch import RandomSearch
 from .DesignedGA import DesignedGA
+from .ACO import ACO
 
 
 
