@@ -10,7 +10,7 @@ class ACO(Algorithm):
                  budget: int, # number of iteration 
                  name: str = "ACO",
                  algorithm_info: str = "Ant Colony Optimization Algorithm",
-                 number_of_ants: int = 10, # at least 10 ants
+                 number_of_ants: int = 20, # at least 10 ants
                  C: float = 1.0, # pheromone deposit ,
                  evaporate_rate: float = 0.01 # pheromone evaporation rate (rho)
                  ):
