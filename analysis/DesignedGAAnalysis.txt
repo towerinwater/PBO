@@ -1,0 +1,20 @@
+
+ANALYSIS OF THE DESIGNED GENETIC ALGORITHM'S PERFORMANCE
+
+The GA implemented the prescribed framework of uniform crossover, mutation, and a parent population of at 
+least 10. In addition, tournament selection with elitism were applied, choosing a mutation parameter 
+of 0.01 and a constant population of 44 after repeated variation and testing of performance. 
+The Leading Ones (F2) function appeared to be most sensitive to these algorithmic adjustments. 
+
+All problems either reached or neared their pre-defined optimums using the designed GA. 
+F1, F3, F23, and F25 achieved full perfomance; F18 reached 4.146, compared to its optimum of 4.216; 
+F24 reached 19.4, compared to its optimum of 20; F2 performed the worst, reaching 87 compared to 
+an optimum of 100.  
+
+Observing the corresponding data plots, behaviour is consistent with that of previous optimisation 
+algorithms, demonstrating exponential and asymptotic approaches towards the corresponding optima 
+or maxima. F2's trials vary most from this trend, likely attributed to the relatively low number of 
+independent trials (of the prescribed 10) that achieved the maximum. 
+
+
+In comparison with Random Search....!!!!!

@@ -1,7 +1,6 @@
 from .algorithm_interface import Algorithm
 import ioh 
 import numpy as np
-import sys
 
 
 
@@ -12,10 +11,11 @@ class DesignedGA(Algorithm):
     The GA follows the generic framework involving uniform crossover, mutation, and a parent population 
     of at least 10 individuals. 
     '''
-    def __init__(self, budget: int, population_size: int = 20):
+    def __init__(self, budget: int, population_size: int = 20, mutation_rate: float = 0.01):
         super().__init__(budget, name="Designed Genetic Algorithm", algorithm_info="A simple genetic algorithm with uniform crossover, mutation and a population of at least 10 individuals.")
         self.population_size = max(population_size, 10)  # Ensure at least 10 individuals
         self.budget = budget 
+        self.mutation_rate = mutation_rate
 
     def tournament_select(self, func, pop: np.ndarray, sub_size = 8) -> np.ndarray:
         '''
@@ -74,14 +74,12 @@ class DesignedGA(Algorithm):
 
         return crsd_pop 
 
-    def mutate(self, func, pop: np.ndarray, n) -> np.ndarray:
+    def mutate(self, mutation_rate, pop: np.ndarray, n) -> np.ndarray:
         '''
         Helper function to perform bit mutation on each individual in a population, where 
         the mutation parameter determines chance of mutating each entire individual. 
         The mutated population is returned. 
         '''
-
-        mutation_rate = 3 / n #mutation probability
 
         mutated = pop.copy()
         for i in range(len(pop)):
@@ -89,8 +87,6 @@ class DesignedGA(Algorithm):
                 if np.random.rand() < mutation_rate:
                     mutated[i][j] = 1 - mutated[i][j]
         return mutated
-
-    #def genetic_algorithm(func: ioh.problem.PBO, budget = None, p_size = 30): 
 
     def __call__(self, func: ioh.problem.PBO):
 
@@ -107,50 +103,36 @@ class DesignedGA(Algorithm):
         else:
             optimum = func.optimum.y 
 
-        # An independent run for each algorithm on each problem. #
-        #for r in range(10):
+        # print ("Optimum: ", optimum)
+
+        # An independent run for each algorithm on each problem #
         
         # Randomly initialise population of self.population_size individuals
         pop = np.zeros(self.population_size, dtype = np.ndarray)
         for i in range(self.population_size):
             pop[i] = np.random.randint(2, size = n)
-        
-        f_opt = sys.float_info.min # initialise optimum as the lowest possible value  
-        x_opt = np.zeros(n, dtype = int)    # initialise corresponding optimum array 
 
         # Loop of function evaluations: 
         while func.state.evaluations < self.budget:
 
+            # Evaluate population for its optimum (i.e., the highest fitness/value of an individual in the population)
+            fitnesses = [func(ind.tolist()) for ind in pop]
+            best_idx = np.argmax(fitnesses)
+            best_idx2 = np.argmax(fitnesses.pop(best_idx))
+
             # Define new population of parents by roulette wheel selection 
             parent_pop = self.tournament_select(func, pop)
+
+            # Assure elitism after selection for the next generation
+            pop[0] = pop[best_idx]
+            pop[1] = pop[best_idx2]
 
             # Perform uniform crossover on each consecutive pair in the new parent population
             offspring_pop = self.uniform_crossover(func, parent_pop, n)
 
             # Mutate the resulting offspring by some probability 1.5/self.population_size
-            m_offspring_pop = self.mutate(func, offspring_pop, n)
+            m_offspring_pop = self.mutate(self.mutation_rate, offspring_pop, n)
             pop = m_offspring_pop # Redefine population
 
-            # Assure elitism
-            pop[0] = x_opt
-            
-            # Evaluate population for its optimum (i.e., the highest fitness/value of an individual in the population)
-            fitnesses = [func(ind.tolist()) for ind in pop]
-            best_idx = np.argmax(fitnesses)
-            f = fitnesses[best_idx]
-            x = pop[best_idx]
-
-            if f > f_opt:
-                f_opt = f
-                x_opt = x
-
-            if f_opt >= optimum:
-                break
-        
-        # Reset function
-        # func.reset() 
-
-        # Return optimal fitness/value 'f_opt' and corresponding array 'x_opt' 
-        #return f_opt, x_opt 
 
         
