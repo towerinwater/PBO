@@ -3,6 +3,8 @@
 \usepackage[margin=1.5cm]{geometry}
 \usepackage[most]{tcolorbox}
 \usepackage{hyperref}
+\usepackage[normalem]{ulem} 
+
 \hypersetup{
     colorlinks=true,
     linkcolor=blue
@@ -170,27 +172,35 @@
         \end{quote}
         \paragraph{Observation}
             \begin{quote}
-                The limit only approach the value from the side, in this case we only consider approach $\infty$ from the left to right, therefore as $n$ is slowly
-                increasing but never reach the value thus an observation arises
+                \sout{The limit only approach the value from the side, in this case we only consider approach $\infty$ from the left to right, therefore as $n$ is slowly
+                increasing but never reach the value thus an observation arises:
+                $\lim_{n\rightarrow\infty}\left(1-\frac{1}{h(n)}\right)^n < e^{-1}$.
+                From $(\circ)\Rightarrow\; \geq 1 - e^{-1/3}$, Minus sign therefore change the equality sign.}
+            \end{quote}
+
+            \begin{quote}
+                \sout{Recall that time complexity for the EA is the number of iterations until reaching the optimum, same notation as $T$ is the total number of iterations
+                until optimum, and we let $t = (n-1)\ln n$ iterations until optimum. Therefore if,}
+                \begin{itemize}
+                    \item \sout{$\boldsymbol{T\leq t}$ meaning sucessfully reaching optimum.}
+                    \item \sout{$\boldsymbol{T > t}$ meaning failed to reaching optimum.}
+                \end{itemize}
+                \sout{Then the probability of failing to reach optimum is $P(T > t) \geq 1-e^{-1/3} = \Omega(1)$.}
+            \end{quote}
+        \paragraph{Observation}
+            \begin{quote}
+                To derive the $\geq$ as the failure probability for $P(T > t)$ can be done by observing the initialisation. As we have known that,
+                there will be $\leq\frac{2n}{3}$ one-bits this mean that there will be $\geq\frac{n}{3}$ zero-bits. We can replace the constant $\frac{1}{3}$ with
+                other scalar in the range of $x\in\left[\frac{1}{3},1\right]$, think the failure probability as $1-e^{-x}$, thus it's increasing therefore we have
+                that
                 \begin{equation*}
-                    \begin{aligned}
-                        &\lim_{n\rightarrow\infty}\left(1-\frac{1}{h(n)}\right)^n < e^{-1}\\
-                        &\text{From } (\circ)\Rightarrow\; \geq 1 - e^{-1/3},\quad\text{Minus sign therefore change the equality sign}
-                    \end{aligned}
+                    P(T > t) \geq 1 - e^{-1/3} 
+                \end{equation*}
+                Then the probability failing to reach optimum is 
+                \begin{equation*}
+                    P(T > t)\geq  1 - e^{-1/3} =\Omega(1)
                 \end{equation*}
             \end{quote}
-        \begin{quote}
-            Recall that time complexity for the EA is the number of iterations until reaching the optimum, same notation as $T$ is the total number of iterations
-            until optimum, and we let $t = (n-1)\ln n$ iterations until optimum. Therefore if,
-            \begin{itemize}
-                \item[--] $\boldsymbol{T\leq t}$ meaning sucessfully reaching optimum.
-                \item[--] $\boldsymbol{T > t}$ meaning failed to reaching optimum.
-            \end{itemize} 
-            Then the probability of failing to reach optimum is
-            \begin{equation*}
-                P(T > t) \geq 1-e^{-1/3} = \Omega(1)
-            \end{equation*}
-        \end{quote}
         \paragraph{Explanation}
             \begin{quote}
                 The reason of choosing the failure probability instead of successful probability for the lower bound is because we give a candidate of $t$
@@ -200,20 +210,18 @@
             \end{quote}
     \subsection{Tying Everything Together}
         \begin{quote}
-            After going through the hazard we are blessed with the result of a \emph{survival function} as $1 - e^{-1/3}$, one of the properties we can harness
-            is the monotonic decreasing essence. From \href{https://en.wikipedia.org/wiki/Survival_function}{Wikipedia}
+            \sout{After going through the hazard we are blessed with the result of a \emph{survival function} as $1 - e^{-1/3}$, one of the properties we can harness
+            is the monotonic decreasing essence. From \href{https://en.wikipedia.org/wiki/Survival_function}{Wikipedia}}
             \begin{quote}
-                \itshape Every survival function is monotonically decreasing. 
+                \sout{\itshape Every survival function is monotonically decreasing. }
             \end{quote}
         \end{quote}
         \paragraph{Using the Tail sum formula}
         \begin{align*}
-            \mathbb{E}[T] &= \sum_{k=1}^{n = \infty}P(T>k)\\
-            &= \sum_{k=1}^{t}P(T>k) + \sum_{k=t}^{\infty}P(T>k)\\
-            &\geq \sum_{k=1}^{t}P(T>k)\\
-            &\geq \sum_{k=1}^{t}P(T>t),\quad\text{Survival function property}\\
-            &\geq \sum_{k=1}^{t}\Omega(1)\\
-            &\geq t\Omega(1)\\
+            \mathbb{E}[T] &= \sum_{t=1}^{\infty}P(T>t)\\
+            &= \sum_{t=1}^{(n-1)\ln n}P(T>t) + \sum_{k=(n-1)\ln(n) + 1}^{\infty}P(T>k)\\
+            &\geq \sum_{t=1}^{(n-1)\ln n}P(T>t)\\
+            &\geq \sum_{t=1}^{(n-1)\ln n}\Omega(1)\\
             &\geq (n-1)\ln(n)\Omega(1)\\
             \mathbb{E}[T]&\geq \Omega(n\log n)\\
         \end{align*}
