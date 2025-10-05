@@ -68,7 +68,7 @@ class MaxMinASStar(Algorithm):
         delta_tau = self.C
 
         while problem.state.evaluations < self.budget:
-            # Step 4a: construct solutions for all ants
+            # construct solutions for all ants
             for _ in range(self.number_of_ants):
                 solution = np.zeros(n, dtype=int)
                 for i in range(n):
