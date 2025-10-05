@@ -59,8 +59,8 @@
     Therefore we have that,
     \begin{align*}
         P(T < k) &\leq e^{-n/2\ln2}- \frac{1}{2^n}\\
-        \Rightarrow 1 - P(T < k) &\leq 1 - e^{-n/2\ln2} + \frac{1}{2^n}\\
-        \Rightarrow P(T \geq k) &\leq 1 - e^{-n/2\ln2} + \frac{1}{2^n}\\
+        \Rightarrow 1 - P(T < k) &\geq 1 - e^{-n/2\ln2} + \frac{1}{2^n}\\
+        \Rightarrow P(T \geq k) &\geq 1 - e^{-n/2\ln2} + \frac{1}{2^n}\\
     \end{align*}
     From the lecture slide we know that $a^n = a^{\Omega(n)}$, additionally since it is a bound we can change the sign from $\geq\;\rightarrow\;=$
     and $1/2^n$ is very insignificant, thus
