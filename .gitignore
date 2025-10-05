@@ -4,4 +4,4 @@ env/
 __pycache__/
 *.pyc
 /algorithms/__pycache__/
-data/
+data/*
