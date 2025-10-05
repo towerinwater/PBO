@@ -1,3 +1,0 @@
-suite = "unknown_suite", funcId = 25, funcName = "NKLandscapes", DIM = 100, maximization = "T", algId = "RandomSearch", algInfo = "Random Search Algorithm"
-%
-data_f25_NKLandscapes/IOHprofiler_f25_DIM100.dat, 1:57083|-0.393446, 1:31710|-0.402544, 1:35375|-0.402399, 1:80404|-0.40647, 1:35602|-0.407043, 1:42871|-0.402879, 1:66221|-0.397662, 1:42628|-0.395405, 1:1065|-0.404943, 1:13637|-0.405985

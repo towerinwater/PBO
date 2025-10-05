@@ -1,3 +1,0 @@
-suite = "unknown_suite", funcId = 2, funcName = "LeadingOnes", DIM = 100, maximization = "T", algId = "RandomSearch", algInfo = "Random Search Algorithm"
-%
-data_f2_LeadingOnes/IOHprofiler_f2_DIM100.dat, 1:62334|15, 1:69751|14, 1:10325|17, 1:14081|17, 1:58466|17, 1:19747|15, 1:18529|15, 1:33129|16, 1:90282|17, 1:17616|16

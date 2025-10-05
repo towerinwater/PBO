@@ -1,6 +1,7 @@
-/.venv/
-/uv.lock
-/env/
+.venv/
+uv.lock
+env/
 __pycache__/
 *.pyc
 /algorithms/__pycache__/
+data/

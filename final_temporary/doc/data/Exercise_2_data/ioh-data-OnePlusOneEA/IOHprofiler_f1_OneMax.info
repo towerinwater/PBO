@@ -1,3 +1,0 @@
-suite = "unknown_suite", funcId = 1, funcName = "OneMax", DIM = 100, maximization = "T", algId = "OnePlusOneEA", algInfo = "(1+1) Evolutionary Algorithm"
-%
-data_f1_OneMax/IOHprofiler_f1_DIM100.dat, 1:766|100, 1:931|100, 1:1406|100, 1:918|100, 1:436|100, 1:942|100, 1:1096|100, 1:1101|100, 1:765|100, 1:1434|100

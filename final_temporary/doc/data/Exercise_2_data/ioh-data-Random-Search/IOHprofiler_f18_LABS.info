@@ -1,3 +1,0 @@
-suite = "unknown_suite", funcId = 18, funcName = "LABS", DIM = 100, maximization = "T", algId = "RandomSearch", algInfo = "Random Search Algorithm"
-%
-data_f18_LABS/IOHprofiler_f18_DIM100.dat, 1:44362|2.18341, 1:75753|2.35627, 1:36183|2.33427, 1:20850|2.25023, 1:76932|2.33427, 1:18143|2.38322, 1:7151|2.58532, 1:65152|2.3084, 1:62015|2.40616, 1:28471|2.27066

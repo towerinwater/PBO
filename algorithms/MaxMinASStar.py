@@ -97,5 +97,3 @@ class MaxMinASStar(Algorithm):
 
             # apply pheromone limits
             np.clip(tau, tau_min, tau_max, out=tau)
-
-        return global_best_solution, global_best_fitness

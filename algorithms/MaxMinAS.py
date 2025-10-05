@@ -12,7 +12,7 @@ class MaxMinAS(Algorithm):
                  algorithm_info: str = "Max-Min Ant System Algorithm",
                  number_of_ants: int = 10, # at least 10 ants
                  C: float = 1.0, # pheromone deposit ,
-                 evaporate_rate: float = 0.01 # pheromone evaporation rate (rho)
+                 evaporate_rate: float = 1 # pheromone evaporation rate (rho)
                  ):
         super().__init__(budget, name, algorithm_info)
         self.number_of_ants = number_of_ants

@@ -1,3 +1,0 @@
-suite = "unknown_suite", funcId = 1, funcName = "OneMax", DIM = 100, maximization = "T", algId = "RLS", algInfo = "Randomized Local Search"
-%
-data_f1_OneMax/IOHprofiler_f1_DIM100.dat, 1:288|100, 1:527|100, 1:312|100, 1:639|100, 1:629|100, 1:542|100, 1:672|100, 1:547|100, 1:485|100, 1:420|100

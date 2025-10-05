@@ -23,6 +23,7 @@ def main():
             problem_class=config.PROBLEMS_TYPE,  # Use the configured problem class # type: ignore
             old_logger=False,  # type: ignore
             output_directory="./data/",
+            # folder_name=f"ioh-data-{algorithm.name}-{algorithm.evaporation_rate}", ======= This is temp for MMAS family only
             folder_name=f"ioh-data-{algorithm.name}",
             zip_output=True, 
         )

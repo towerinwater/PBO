@@ -1,3 +1,0 @@
-suite = "unknown_suite", funcId = 3, funcName = "Linear", DIM = 100, maximization = "T", algId = "RLS", algInfo = "Randomized Local Search"
-%
-data_f3_Linear/IOHprofiler_f3_DIM100.dat, 1:534|5050, 1:497|5050, 1:399|5050, 1:345|5050, 1:482|5050, 1:463|5050, 1:570|5050, 1:624|5050, 1:314|5050, 1:369|5050

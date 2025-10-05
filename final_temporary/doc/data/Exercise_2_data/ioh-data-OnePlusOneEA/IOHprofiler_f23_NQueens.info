@@ -1,3 +1,0 @@
-suite = "unknown_suite", funcId = 23, funcName = "NQueens", DIM = 100, maximization = "T", algId = "OnePlusOneEA", algInfo = "(1+1) Evolutionary Algorithm"
-%
-data_f23_NQueens/IOHprofiler_f23_DIM100.dat, 1:872|9, 1:701|9, 1:661|9, 1:68964|10, 1:663|9, 1:1132|9, 1:2030|9, 1:6764|9, 1:1857|9, 1:9157|10

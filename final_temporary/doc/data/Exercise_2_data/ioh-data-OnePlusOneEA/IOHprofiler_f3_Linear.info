@@ -1,3 +1,0 @@
-suite = "unknown_suite", funcId = 3, funcName = "Linear", DIM = 100, maximization = "T", algId = "OnePlusOneEA", algInfo = "(1+1) Evolutionary Algorithm"
-%
-data_f3_Linear/IOHprofiler_f3_DIM100.dat, 1:1620|5050, 1:1113|5050, 1:965|5050, 1:1114|5050, 1:1431|5050, 1:818|5050, 1:1370|5050, 1:1699|5050, 1:1363|5050, 1:902|5050
