@@ -1,5 +1,13 @@
 import config 
 import ioh 
+from pathlib import Path
+
+def ensure_dir(path: str | Path) -> Path:
+    """Create directory if it does not exist and return a Path."""
+    p = Path(path)
+    p.mkdir(parents=True, exist_ok=True)
+    return p
+
 
 
 def main():
@@ -8,6 +16,9 @@ def main():
     """
 
     print("Starting experiments...")
+
+    out_base = ensure_dir("./data")
+
 
     for algorithm in config.ALGORITHMS:
         print(f"=========== Running experiments for algorithm: {algorithm.name} ========== ")
@@ -22,7 +33,7 @@ def main():
             reps=config.REPETITIONS,
             problem_class=config.PROBLEMS_TYPE,  # Use the configured problem class # type: ignore
             old_logger=False,  # type: ignore
-            output_directory="./data/",
+            output_directory=str(out_base),
             # folder_name=f"ioh-data-{algorithm.name}-{algorithm.evaporation_rate}", ======= This is temp for MMAS family only
             folder_name=f"ioh-data-{algorithm.name}",
             zip_output=True, 
