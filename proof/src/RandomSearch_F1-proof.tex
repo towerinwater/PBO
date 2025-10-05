@@ -1,0 +1,71 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{amsmath, amssymb, amsfonts, float, amsthm}
+\usepackage[most]{tcolorbox}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\begin{document}
+\section*{Setup and Introduction}
+\begin{figure}[H]
+    \begin{tcolorbox}[title={Maximisation Random Search (from Assignment 2)}, colback=black!10, colframe=black!70, fonttitle=\bfseries]
+        \begin{enumerate}
+            \item Choose $\mathbf{x}\in\{0,1\}^n$ where $\mathbf{x}$ has the least 1.
+            \item Produce $\mathbf{x}^\prime\sim\text{Unif}(\{0,1\}^n)$ randomly.
+            \item Replace $\mathbf{x}$ by $\mathbf{x}^\prime$ if $\mathsf{F}(\mathbf{x}^\prime) > \mathsf{F}(\mathbf{x})$.
+            \item Repeat Steps 2 and 3 forever.
+        \end{enumerate}
+    \end{tcolorbox}
+        \caption{Above is the pseudo-code bases on the provided Random Search in the Assignment 2}
+\end{figure}
+\subsection*{OneMax Problem $\mathsf{F}1$}
+    \begin{quote}
+        The OneMax problem is intened to maximise the number of ones inside a tuple of binary elements. Given $\mathbf{x}\in\{0,1\}^n$ thus we have that,
+        \begin{equation*}
+            \argmax_{\mathbf{x}\in\{0,1\}^n}\mathsf{F}(\mathbf{x})\;\text{where } \mathsf{F}(\mathbf{x}) = \sum_{i = 1}^{n}x_i
+        \end{equation*}
+    \end{quote}
+\paragraph{Problem}
+    \begin{quote}
+        Prove that Random Search needs with probability
+        \[
+            1 - e^{-\Omega(n)} 
+            \text{ at least a budget of } 
+            2^{n/2} 
+        \]
+        fitness evaluations to reach an optimal search point for the function $\mathsf{F}$1.
+    \end{quote}
+\begin{proof}
+    For each of the element inside the tuple of $\mathbf{x}^\prime$ is randomly chosen, which implies that each element can be a random variable of
+    $X^\prime_i$, thus
+    \begin{equation*}
+        P(X^\prime_i = 0) = P(X^\prime_i = 1) = \frac{1}{2} 
+    \end{equation*}
+    Suppose that the optimum is $\mathbf{x}^*$, we want to find probability of getting $\mathbf{x}^*$ with at least $2^{n/2}$ iterations when sampling 
+    $\mathbf{x}^\prime$. For $n$ binary digits to be 1 the probability is $p = 1/2^n$ per iteration. Let $T$ be the number of iterations to reach $\mathbf{x}^*$
+    and $k = 2^{n/2}$, then
+    \begin{align*}
+        T &\geq k:\text{ at least $k$ iterations to reach $\mathbf{x}^*$}\\
+        T &< k: \text{ reach at least one $\mathbf{x}^*$ before $k$}\\
+    \end{align*}
+    Suppose we have each iteration $I_i$ to reach $\mathbf{x}^*$ with probability $p$, until $k-1$ iterations, then use the Boole's inequality as
+    \begin{align*}
+        P\left(\bigcup^{k-1}_{i=1}I_i\right) &\leq \sum_{i = 1}^{k-1}P(I_i)\\
+        P\left(\bigcup^{k-1}_{i=1}I_i\right) &\leq (k-1)p\\
+        P\left(\bigcup^{k-1}_{i=1}I_i\right) &\leq \left(2^{n/2} - 1\right)\frac{1}{2^n}\\
+        P\left(\bigcup^{k-1}_{i=1}I_i\right) &\leq 2^{-n/2} - \frac{1}{2^n}\\
+        P\left(\bigcup^{k-1}_{i=1}I_i\right) &\leq e^{-n/2\ln2}- \frac{1}{2^n}\\
+    \end{align*}
+    Therefore we have that,
+    \begin{align*}
+        P(T < k) &\leq e^{-n/2\ln2}- \frac{1}{2^n}\\
+        \Rightarrow 1 - P(T < k) &\leq 1 - e^{-n/2\ln2} + \frac{1}{2^n}\\
+        \Rightarrow P(T \geq k) &\leq 1 - e^{-n/2\ln2} + \frac{1}{2^n}\\
+    \end{align*}
+    From the lecture slide we know that $a^n = a^{\Omega(n)}$, additionally since it is a bound we can change the sign from $\geq\;\rightarrow\;=$
+    and $1/2^n$ is very insignificant, thus
+    \begin{align*}
+        P(T \geq 2^{n/2}) = 1 - e^{-\Omega(n)}
+    \end{align*}
+\end{proof}
+\end{document}
