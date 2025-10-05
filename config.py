@@ -16,8 +16,13 @@ PROBLEMS_TYPE = ioh.ProblemClass.PBO  # Pseudo-Boolean Optimization problems
 
 # a list of algorithm instances to run 
 ALGORITHMS = [
+<<<<<<< HEAD
     # # RandomSearch(budget=BUDGET),
     # # MaxMinAS(budget=BUDGET),
+=======
+    RandomSearch(budget=BUDGET),
+    # MaxMinAS(budget=BUDGET)
+>>>>>>> Proof
     # OnePlusOneEA(budget=BUDGET),
     # # RandomizedLocalSearch(budget=BUDGET),
     # DesignedGA(budget=BUDGET, population_size=44, mutation_rate=0.01),

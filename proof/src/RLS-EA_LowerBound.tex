@@ -1,0 +1,229 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+\usepackage[normalem]{ulem} 
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue
+}
+
+
+
+\begin{document}
+\section{Pseudo-code}
+\begin{tcolorbox}[title={(1+1) EA}, colback=black!10, colframe=black!70, fonttitle=\bfseries]
+    \begin{enumerate}
+        \item Choose $s \in \{0,1\}^n$ randomly.
+        \item Produce $s'$ by flipping each bit of $s$ with probability $1/n$.
+        \item Replace $s$ by $s'$ if $f(s') \geq f(s)$.
+        \item Repeat Steps 2 and 3 forever.
+    \end{enumerate}
+\end{tcolorbox}
+\begin{tcolorbox}[title={RLS}, colback=black!10, colframe=black!70, fonttitle=\bfseries]
+    \begin{enumerate}
+        \item Choose $s \in \{0,1\}^n$ randomly.
+        \item Produce $s'$ from $s$ by flipping \textbf{one} randomly chosen bit.
+        \item Replace $s$ by $s'$ if $f(s') \geq f(s)$.
+        \item Repeat Steps 2 and 3 forever.
+    \end{enumerate}
+\end{tcolorbox}
+\section{Chernoff Bound Initialisation}
+    \subsection{Expected Ones Initialisation}
+        \begin{quote}
+            Given that both algorithms initialise an $n$-set of binary string at random specifically $X_i = \text{Unif}\{0,1\}$ for $i = 1,2,\ldots,n$. Therefore the 
+            probability of getting 0 or 1 is the same as
+            \begin{equation*}
+                P(X_i = 1) = P(X_i = 0) = \frac{1}{2}
+            \end{equation*}
+            The expected value of each $X_i$ is 
+            \begin{equation*}
+                \mathbb{E}[X_i] = 0\cdot\frac{1}{2} + 1\cdot\frac{1}{2} = \frac{1}{2}
+            \end{equation*}
+            Suppose that $X = X_1 + X_2 + \ldots + X_n$, then the expected value of $X$ by using the \emph{Linearity of Expectation} is
+            \begin{equation*}
+                \mathbb{E}[X] = \sum_{i=1}^{n}\mathbb{E}[X_i] = \frac{n}{2}
+            \end{equation*}  
+            If $X$ is the summation of those values inside the binary string, then there will be expected to have $\frac{n}{2}$ ones.
+        \end{quote}
+    \subsection{Chernoff}
+        \begin{equation*}
+            \begin{aligned}
+                \forall \delta > 0:&\;
+                P\!\left(X > (1+\delta)\cdot \mathbb{E}[X]\right)
+                < \left( \frac{e^{\delta}}{(1+\delta)^{1+\delta}} \right)^{\mathbb{E}[X]}\quad(\bigstar)\\
+                \forall\, 0 < \delta < 1:&\;
+                P\!\left(X < (1-\delta)\cdot \mathbb{E}[X]\right)
+                < e^{-\mathbb{E}[X]\delta^{2}/2}
+            \end{aligned} 
+        \end{equation*}
+        From the previous section, it's known that $\mathbb{E}[X] = \frac{n}{2}$, choose inequality $(\bigstar)$  and then substitute.
+        \begin{align*}
+            P\left(X > (1 + \delta)\cdot\frac{n}{2}\right) &< \left(\frac{e^\delta}{(1+\delta)^{1+\delta}}\right)^{\frac{n}{2}}\\
+            \Rightarrow P\left(X > \left(\frac{1}{2} + \frac{\delta}{2}\right)\cdot n\right) &< \ldots
+        \end{align*}
+        Let $2\delta^\prime = \delta$, which is always inside the bound of $\delta > 0$. Now choose the domain of $\delta$ as $0 < \delta \leq 1$. Therefore, the
+        new domain will be $0<2\delta^\prime\leq1\Rightarrow0<\delta^\prime\leq\frac{1}{2}$, thus
+        \begin{align*}
+            P\left(X > \left(\frac{1}{2} + \delta^\prime\right)\cdot n\right) &< \left(\frac{e^{2\delta^\prime}}{(1+2\delta^\prime)^{1+2\delta^\prime}}\right)^{\frac{n}{2}}\\
+            \Rightarrow \ldots &< \rho^{\frac{n}{2}}\\
+            \Rightarrow \ldots &< e^{\frac{n}{2}\ln\rho}\\
+        \end{align*}
+        Evaluate $\rho = \frac{e^{2\delta^\prime}}{(1+2\delta^\prime)^{1+2\delta^\prime}}$
+        \begin{equation*}
+            \ln\rho = 2\delta^\prime - (1+2\delta^\prime)\ln (1+2\delta^\prime) < 0,\quad\text{Negative constant}
+        \end{equation*}
+        Therefore,
+        \begin{equation*}
+            P\left(X > \left(\frac{1}{2} + \delta^\prime\right)\cdot n\right) < e^{-\Omega(n)}
+        \end{equation*}
+        Then,
+        \begin{align*}
+            P\left(X > \frac{2n}{3}\right) &< e^{-\Omega(n)}\\
+            \Rightarrow 1 - P\left(X > \frac{2n}{3}\right) &\leq 1 - e^{-\Omega(n)}\\
+            \Rightarrow P\left(X \leq \frac{2n}{3}\right) &\leq 1 - e^{-\Omega(n)}
+        \end{align*}
+        \begin{quote}
+            This means that both algorithms with uniform random binary string initialisation will have a very high chance of having at most $2n/3$ one-bits
+            inside the initialisation. It's so high that with large $n$ or large binary space it's almost gauranteed.
+        \end{quote}
+\section{RLS Lower Bound}
+        \begin{quote}
+            Given from the initialisation that there are expected to have $2n/3$ one-bits, thus $m = n/3$ zero-bits needed to be flipped. Each zero-bit has a chance
+            of being flipped is $1/n$. We want to know what is the lower bound $\Omega$ that will let flipping all distinct 0-bits at least once. This is a 
+            Collector's Coupon Theorem.
+        \end{quote}
+        \subsection{Collector's Coupon Theorem}
+            \begin{quote}
+                Suppose that we have $n$ distinct cards and we draw each everytime with \emph{replacement}. How many times do I expect to draw to collect all 
+                of those cards. This implies a similarity as our prolem with RLS lower bound. 
+            \end{quote}
+            \begin{quote}
+                From \href{https://en.wikipedia.org/wiki/Coupon_collector%27s_problem}{Wikipedia}, let $T$ be the total number of times to finish flipping 
+                all the 0-bits, $t_i$ be the number of times when reaching to the $i^{th}$ bit after $i - 1$ bits, therefore the probability for reach. Then 
+                $T = t_{k} + t_{k+1} + \ldots + t_m$. The probability of each 0-bit being picked is,
+                \begin{equation*}
+                    p_i = \frac{n - (i - 1)}{n}
+                \end{equation*}
+                Here comes the \emph{significant} point, each $t_i$ has a \emph{geometric distribution}, recall the geometric distribution from
+                \href{https://en.wikipedia.org/wiki/Geometric_distribution}{Wikipedia},
+                \begin{quote}
+                    \itshape The probability distribution of the number $X$ of Bernoulli trials needed to get one success. 
+                \end{quote}
+                So, each time $t_i$ reflects a geometric distribution since we want to know how many times do we need to be able to pick that 0-bit,
+                by the geometric distribution we can infer the expected value as $\mathbb{E}[t_i] = 1/p_i$, by the \emph{linearity of the Expectation},
+                \begin{align*}
+                    \mathbb{E}[T] &= \mathbb{E}[t_k] + \mathbb{E}[t_{k+1}] + \ldots + \mathbb{E}[t_{m}]\\
+                    &= \frac{1}{p_k} + \frac{1}{p_{k+1}} +\ldots + \frac{1}{p_m}\\
+                    &= \frac{n}{n-(k-1)} + \frac{n}{n-k}+\ldots+\frac{n}{n-(m-1)}\\
+                    &= n\left(\frac{1}{n-(k-1)} + \frac{1}{n-k}+\ldots+\frac{1}{n-(m-1)}\right)\\
+                    &= nH_{m-k}\\
+                    &= n\ln(m-k) + C\\
+                    &= n\ln(n/3-k) + C\\
+                    &= n\ln(n - 3k) + C\\
+                    \mathbb{E}[T]&=\Omega(n\log n)
+                \end{align*}
+                By using the Theorem, we can derive a lower bound for the RLS to be $\Omega(n\log n)$.
+            \end{quote}
+\section{(1+1)EA Lower Bound}
+    \begin{quote}
+        Given the initialisation, as for the RLS the lower bound is $\Omega(n\log n)$, so we are also trying to show that for the EA it's also $\Omega(n\log n)$
+        . We may assume that everytime we flip the 0-bit to 1-bit it's will yield a improvement. We may choose $t=(n-1)\ln n$ iterations until optimum,
+        the reason of choosing such $t$ maybe from more complicated mathmatical proof, since this will give a nice bound for when hitting an optimum.
+    \end{quote}
+    \subsection{Waterfall Probability}
+        \begin{align*}
+            1 - \frac{1}{n},&\quad\text{the probability of a specific bit not being flipped.}\\
+            \left(1-\frac{1}{n}\right)^t,&\quad\text{the probability of a specific bit not being flipped for all } t \text{ iterations}\\
+            1-\left(1-\frac{1}{n}\right)^t,&\quad\text{the probability of a specific bit being flipped for all } t \text{ iterations}\\
+            \left[1-\left(1-\frac{1}{n}\right)^t\right]^m,&\quad\text{the probability of all $m$ bits being flipped for all } t \text{ iterations}\\
+            1-\left[1-\left(1-\frac{1}{n}\right)^t\right]^m,&\quad\text{the probability of all $m$ bits not being flipped for all } t \text{ iterations}\\
+        \end{align*}
+        The last one is called the \emph{failure probability}.
+    \subsection{Some Calculus}
+        \begin{quote}
+            For whatever algorithms time complexity analysis, we always let $n$ explodes or in another word let $n\rightarrow\infty$. Before that,
+            let,
+            \begin{equation*}
+                \frac{1}{h(n)}= \left(1-\frac{1}{n}\right)^t
+            \end{equation*}
+            Then,
+            \begin{align*}
+                &\lim_{n\rightarrow\infty} 1-\left[1-\frac{1}{h(n)}\right]^{n/3}\\
+                &1 - \left[\lim_{n\rightarrow\infty}\left(1-\frac{1}{h(n)}\right)^n\right]^{1/3}\quad(\circ)
+            \end{align*}
+            Now, we need to analyse does $h(n)$ grows therefore $1/h(n)$ will diminish and also will the power of $n$ catch up with the dimishing. Let's analyse
+            the $h(n)$ first,
+            \begin{align*}
+                \lim_{n\rightarrow\infty}h(n) &= \lim_{n\rightarrow\infty}\frac{1}{\left(1-\frac{1}{n}\right)^t}\\
+                &= \frac{1}{\displaystyle\lim_{n\rightarrow\infty}\left(1-\frac{1}{n}\right)^{(n-1)\ln n}},\quad\text{Using the Quotient Limit Law}\\
+                &= \frac{1}{\displaystyle\lim_{n\rightarrow\infty}\left[\left(1-\frac{1}{n}\right)^{(n-1)}\right]^{\ln n}}\\
+                &= \frac{1}{\displaystyle\lim_{n\rightarrow\infty}\left[e^{-1}\right]^{\ln n}},\quad\text{Classic Limits Problem check on }\text{\href{https://math.stackexchange.com/questions/2280703/limit-of-11-nn-is-not-equal-to-one-but-why}{Math Exchange}}\\
+                &= \frac{1}{n^{-1}}\\
+                &= n\\
+            \end{align*}
+            After analysis of $h(n)$ it yields $n$, therefore with $(\circ)$ as $n\rightarrow\infty$ it seems to yields back the Original Limits problem. So,
+            \begin{equation*}
+                \text{From } (\circ)\Rightarrow 1 - e^{-1/3}
+            \end{equation*}
+            We have found that the failure probability is constant which is $\Omega(1)$
+        \end{quote}
+        \paragraph{Observation}
+            \begin{quote}
+                \sout{The limit only approach the value from the side, in this case we only consider approach $\infty$ from the left to right, therefore as $n$ is slowly
+                increasing but never reach the value thus an observation arises:
+                $\lim_{n\rightarrow\infty}\left(1-\frac{1}{h(n)}\right)^n < e^{-1}$.
+                From $(\circ)\Rightarrow\; \geq 1 - e^{-1/3}$, Minus sign therefore change the equality sign.}
+            \end{quote}
+
+            \begin{quote}
+                \sout{Recall that time complexity for the EA is the number of iterations until reaching the optimum, same notation as $T$ is the total number of iterations
+                until optimum, and we let $t = (n-1)\ln n$ iterations until optimum. Therefore if,}
+                \begin{itemize}
+                    \item \sout{$\boldsymbol{T\leq t}$ meaning sucessfully reaching optimum.}
+                    \item \sout{$\boldsymbol{T > t}$ meaning failed to reaching optimum.}
+                \end{itemize}
+                \sout{Then the probability of failing to reach optimum is $P(T > t) \geq 1-e^{-1/3} = \Omega(1)$.}
+            \end{quote}
+        \paragraph{Observation}
+            \begin{quote}
+                To derive the $\geq$ as the failure probability for $P(T > t)$ can be done by observing the initialisation. As we have known that,
+                there will be $\leq\frac{2n}{3}$ one-bits this mean that there will be $\geq\frac{n}{3}$ zero-bits. We can replace the constant $\frac{1}{3}$ with
+                other scalar in the range of $x\in\left[\frac{1}{3},1\right]$, think the failure probability as $1-e^{-x}$, thus it's increasing therefore we have
+                that
+                \begin{equation*}
+                    P(T > t) \geq 1 - e^{-1/3} 
+                \end{equation*}
+                Then the probability failing to reach optimum is 
+                \begin{equation*}
+                    P(T > t)\geq  1 - e^{-1/3} =\Omega(1)
+                \end{equation*}
+            \end{quote}
+        \paragraph{Explanation}
+            \begin{quote}
+                The reason of choosing the failure probability instead of successful probability for the lower bound is because we give a candidate of $t$
+                iterations, the number of iterations we want until it's the iteration of optimum. But then after some maths, it is shown that it's not
+                sufficient enough for $t$ iteration with a probability therefore we need some more iterations, which is the lower bound. It's the buffer of 
+                how much more is needed.
+            \end{quote}
+    \subsection{Tying Everything Together}
+        \begin{quote}
+            \sout{After going through the hazard we are blessed with the result of a \emph{survival function} as $1 - e^{-1/3}$, one of the properties we can harness
+            is the monotonic decreasing essence. From \href{https://en.wikipedia.org/wiki/Survival_function}{Wikipedia}}
+            \begin{quote}
+                \sout{\itshape Every survival function is monotonically decreasing. }
+            \end{quote}
+        \end{quote}
+        \paragraph{Using the Tail sum formula}
+        \begin{align*}
+            \mathbb{E}[T] &= \sum_{t=1}^{\infty}P(T>t)\\
+            &= \sum_{t=1}^{(n-1)\ln n}P(T>t) + \sum_{k=(n-1)\ln(n) + 1}^{\infty}P(T>k)\\
+            &\geq \sum_{t=1}^{(n-1)\ln n}P(T>t)\\
+            &\geq \sum_{t=1}^{(n-1)\ln n}\Omega(1)\\
+            &\geq (n-1)\ln(n)\Omega(1)\\
+            \mathbb{E}[T]&\geq \Omega(n\log n)\\
+        \end{align*}
+        Therefore the lower bound for (1+1)EA is $\Omega(n\log n)$
+\end{document}
