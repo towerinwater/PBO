@@ -126,5 +126,3 @@ class MaxMinAS(Algorithm):
 
             # apply pheromone limits
             np.clip(tau, tau_min, tau_max, out=tau)
-
-
