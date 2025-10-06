@@ -1,4 +1,5 @@
-An Phan: ACO algorithm, MMAS* analysis, 
+An Phan: ACO algorithm implementation, MMAS* analysis, GA analysis exclude F23-24, RLS-(1+1)EA-Random Search analysis
 Tri Hai: Proofs, MMAS analysis, ACO analysis.
-Tatiana: Genetic Algorithm, 
-Seth: Setup and maintain the team's frame
+Tatiana: Genetic Algorithm, General First Draft for GA analysis.
+Seth: Setup and maintain the team's coding framework, GA analysis for F23-24, proof peer reviewer, MMAS code implementation. 
+Miki: mutation function for GA, MMAS* code implementation.
