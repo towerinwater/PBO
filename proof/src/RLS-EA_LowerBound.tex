@@ -105,7 +105,7 @@
                 all the 0-bits, $t_i$ be the number of times when reaching to the $i^{th}$ bit after $i - 1$ bits, therefore the probability for reach. Then 
                 $T = t_{k} + t_{k+1} + \ldots + t_m$. The probability of each 0-bit being picked is,
                 \begin{equation*}
-                    p_i = \frac{n - (i - 1)}{n}
+                    p_i = \frac{m - (i - 1)}{n}
                 \end{equation*}
                 Here comes the \emph{significant} point, each $t_i$ has a \emph{geometric distribution}, recall the geometric distribution from
                 \href{https://en.wikipedia.org/wiki/Geometric_distribution}{Wikipedia},
@@ -117,12 +117,10 @@
                 \begin{align*}
                     \mathbb{E}[T] &= \mathbb{E}[t_k] + \mathbb{E}[t_{k+1}] + \ldots + \mathbb{E}[t_{m}]\\
                     &= \frac{1}{p_k} + \frac{1}{p_{k+1}} +\ldots + \frac{1}{p_m}\\
-                    &= \frac{n}{n-(k-1)} + \frac{n}{n-k}+\ldots+\frac{n}{n-(m-1)}\\
-                    &= n\left(\frac{1}{n-(k-1)} + \frac{1}{n-k}+\ldots+\frac{1}{n-(m-1)}\right)\\
-                    &= nH_{m-k}\\
-                    &= n\ln(m-k) + C\\
-                    &= n\ln(n/3-k) + C\\
-                    &= n\ln(n - 3k) + C\\
+                    &= \frac{n}{m-(k-1)} + \frac{n}{m-k}+\ldots+\frac{n}{m-(m-1)}\\
+                    &= n\left(\frac{1}{n-(k-1)} + \frac{1}{n-k}+\ldots+\frac{1}{1}\right)\\
+                    &= nH_{n-k+1}\\
+                    &= n\ln(n-k+1) + C\\
                     \mathbb{E}[T]&=\Omega(n\log n)
                 \end{align*}
                 By using the Theorem, we can derive a lower bound for the RLS to be $\Omega(n\log n)$.
