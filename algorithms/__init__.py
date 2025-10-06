@@ -3,7 +3,8 @@ from .OnePlusOneEA import OnePlusOneEA
 from .RLS import RandomizedLocalSearch
 from .RandomSearch import RandomSearch
 from .DesignedGA import DesignedGA
-from .MaxMinAS import MaxMinAS
+from .MMAS_star import MMAS_star
+from .MMAS import MMAS
 
 
 

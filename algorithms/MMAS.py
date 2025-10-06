@@ -2,7 +2,7 @@ import ioh
 import numpy as np
 from .algorithm_interface import Algorithm
 
-class MaxMinAS(Algorithm):
+class MMAS(Algorithm):
     """
     Max-Min Ant System (MMAS) algorithm implementation.
     """
@@ -105,7 +105,7 @@ class MaxMinAS(Algorithm):
                 solution_vec, solution_fitness = self._local_search(solution, problem)
 
                 # update global best if needed
-                if solution_fitness > global_best_fitness:
+                if solution_fitness >= global_best_fitness:
                     global_best_solution = solution_vec.copy()
                     global_best_fitness = solution_fitness
 

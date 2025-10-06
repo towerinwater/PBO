@@ -1,4 +1,4 @@
-from algorithms import RandomSearch, MaxMinAS
+from algorithms import MMAS
 import ioh
 
 
@@ -6,8 +6,8 @@ import ioh
 BUDGET = 100000   # maximum number of function evaluations per run (or number of iterations or generations for GAs)
 DIMENSION = 100   # problem dimension/size (e.g., number of bits for OneMax and LeadingOnes)
 REPETITIONS = 10  # number of independent repetitions or runs for each problem
-# PROBLEM_IDS = [1, 2, 3, 18, 23, 24, 25]   # problem IDs to be used in the experiments (e.g., 1 -> OneMax, 2 -> LeadingOnes, etc.)
-PROBLEM_IDS = [1, 2]   # problem IDs to be used in the experiments (e.g., 1 -> OneMax, 2 -> LeadingOnes, etc.)
+PROBLEM_IDS = [1, 2, 3, 18, 23, 24, 25]   # problem IDs to be used in the experiments (e.g., 1 -> OneMax, 2 -> LeadingOnes, etc.)
+# PROBLEM_IDS = [1, 2]   # problem IDs to be used in the experiments (e.g., 1 -> OneMax, 2 -> LeadingOnes, etc.)
 PROBLEMS_TYPE = ioh.ProblemClass.PBO  # Pseudo-Boolean Optimization problems
 
 
@@ -17,13 +17,13 @@ PROBLEMS_TYPE = ioh.ProblemClass.PBO  # Pseudo-Boolean Optimization problems
 
 # a list of algorithm instances to run
 ALGORITHMS = [
-    RandomSearch(budget=BUDGET),
-    MaxMinAS(budget=BUDGET,
-              name="MaxMinAS",
-              algorithm_info="Max-Min Ant System with Local Search",
-              number_of_ants=20,
-              Q=1.0,
-              rho=0.1, # pheromone evaporation rate 
+    # RandomSearch(budget=BUDGET),
+    MMAS(budget=BUDGET,
+         name="MMAS",
+         algorithm_info="Max-Min Ant System with Local Search",
+         number_of_ants=20,
+         Q=1.0,
+         rho=0.1, # pheromone evaporation rate 
               ),
     # OnePlusOneEA(budget=BUDGET),
     # RandomizedLocalSearch(budget=BUDGET),

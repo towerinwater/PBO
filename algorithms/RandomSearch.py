@@ -9,9 +9,9 @@ class RandomSearch(Algorithm):
 
     def __call__(self, problem: ioh.problem.PBO): # this overrides the __call__ method in the Algorithm class
         for _ in range(self.budget):
-            X: np.ndarray = np.random.randint(2, size=problem.meta_data.n_variables)
-            problem(X.tolist())
-
+            X: np.ndarray = np.random.randint(2, size=problem.meta_data.n_variables) # samples a solution from {0,1}^n (of size 2^n)
+                                                                                    # by choosing each bit independently and uniformly at random.
+            problem(X.tolist())                                                     # evaluate the solution
 
 
 
