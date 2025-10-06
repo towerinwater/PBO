@@ -21,3 +21,4 @@ All the code for the algoritms: final/code/algorithms
 Proofs: final/doc/analysis/proof
 Plots, analysis: final/doc/analysis/Assignment_2_Analysis.pdf
 Backup zips for IOH: final/data/
+Team contribution: final/doc/team_contribution.txt
