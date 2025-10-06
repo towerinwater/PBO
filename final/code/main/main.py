@@ -1,13 +1,12 @@
-import config 
-import ioh 
+import sys
 from pathlib import Path
 
-def ensure_dir(path: str | Path) -> Path:
-    """Create directory if it does not exist and return a Path."""
-    p = Path(path)
-    p.mkdir(parents=True, exist_ok=True)
-    return p
+# Add the parent directory (code/) to the Python path to enable imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
+from utilities import config
+from utilities.utilities import ensure_dir
+import ioh
 
 
 def main():
@@ -17,7 +16,9 @@ def main():
 
     print("Starting experiments...")
 
-    out_base = ensure_dir("./data")
+    # ensures the doc/data directory exists and output there
+    # Path is relative to the main.py location: main/ -> code/ -> final/ -> doc/data/
+    out_base = ensure_dir(Path(__file__).parent.parent.parent / "doc" / "data")
 
 
     for algorithm in config.ALGORITHMS:
@@ -42,7 +43,7 @@ def main():
         experiment.run()
         print(f"=========== Completed experiments for algorithm: {algorithm.name} ========== ")
     print("All experiments completed.")
-    print(f"Results are saved in the './data/' directory.")
+    print(f"Results are saved in the '{out_base}' directory.")
 
 
 if __name__ == "__main__":

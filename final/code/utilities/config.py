@@ -1,5 +1,4 @@
 from algorithms import RandomSearch, MaxMinAS, DesignedGA, ACO, MaxMinASStar
-import math
 import ioh
 
 
@@ -18,9 +17,9 @@ ALGORITHMS = [
     # MaxMinAS(budget=BUDGET, evaporate_rate=1),
     # MaxMinAS(budget=BUDGET, evaporate_rate=1/math.sqrt(DIMENSION)),
     # MaxMinAS(budget=BUDGET, evaporate_rate=1/DIMENSION),
-    # # RandomSearch(budget=BUDGET),
+    RandomSearch(budget=BUDGET),
     # OnePlusOneEA(budget=BUDGET),
     # # RandomizedLocalSearch(budget=BUDGET),
-    # DesignedGA(budget=BUDGET, population_size=44, mutation_rate=0.01),
+    DesignedGA(budget=BUDGET, population_size=44, mutation_rate=0.01),
     # ACO(budget=BUDGET)
 ]

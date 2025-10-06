@@ -5,3 +5,9 @@ __pycache__/
 *.pyc
 /algorithms/__pycache__/
 data/*
+
+# Project configuration
+pyproject.toml
+.DS_Store
+.vscode/
+.python-version

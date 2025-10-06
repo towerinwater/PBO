@@ -1,4 +1,4 @@
-Let us begin with problem (with fid) 1. It is worth noting that the x-axis has been log-scaled and y-axis stays the same. 
+Let us begin with problem (with fid) 1. It is worth noting that the x-axis has been log-scaled and y-axis has also been been log-scaled, although only the x-axis was required to go through the transformation. 
 Although the trend is expected, it is worthwhile to go through it in details (as we should always do). 
 Right away, we can observe that RandomSearch performs the worst out of the other two. 
 Random search basically guesses the solution (randomly) and for the first few number of iterations/function evaluations, 
