@@ -1,4 +1,5 @@
 from algorithms import RandomSearch, MaxMinAS, DesignedGA, ACO, MaxMinASStar
+import math
 import ioh
 
 

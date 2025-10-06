@@ -1,0 +1,4 @@
+An Phan: ACO algorithm, MMAS* analysis, 
+Tri Hai: Proofs, MMAS analysis, ACO analysis.
+Tatiana: Genetic Algorithm, 
+Seth: Setup and maintain the team's frame
