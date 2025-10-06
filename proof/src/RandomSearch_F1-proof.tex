@@ -4,6 +4,8 @@
 \usepackage[most]{tcolorbox}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
 
 \begin{document}
 \section*{Setup and Introduction}
@@ -61,11 +63,22 @@
         P(T < k) &\leq e^{-n/2\ln2}- \frac{1}{2^n}\\
         \Rightarrow 1 - P(T < k) &\geq 1 - e^{-n/2\ln2} + \frac{1}{2^n}\\
         \Rightarrow P(T \geq k) &\geq 1 - e^{-n/2\ln2} + \frac{1}{2^n}\\
+        \Rightarrow P(T \geq k) &> 1 - e^{-n/2\ln2}\\
+        \Rightarrow P(T \geq k) &> 1 - e^{-(\ln2/2)n}\\
     \end{align*}
-    From the lecture slide we know that $a^n = a^{\Omega(n)}$, additionally since it is a bound we can change the sign from $\geq\;\rightarrow\;=$
-    and $1/2^n$ is very insignificant, thus
+    Recall that for lower bound,
+    \begin{equation*}
+        \Omega(n) = \left\{g(n): \exists c>0: \exists n_0\in\mathbb{N}^+: \forall n\geq n_0: g(n)\geq c\cdot n\right\}
+    \end{equation*}
+    Given that $g(n) = \frac{\ln2}{2}n$, thus:
     \begin{align*}
-        P(T \geq 2^{n/2}) = 1 - e^{-\Omega(n)}
+        \frac{\ln2}{2}n&\geq cn\\
+        \Rightarrow c&\leq\frac{\ln2}{2}
+    \end{align*}
+    Therefore there exists $c\in(0,\ln2/2]$, then we can say that
+    \begin{align*}
+        P(T \geq k) &= 1 - e^{-\Omega(n)}\\
+        P(T \geq 2^{n/2}) &= 1 - e^{-\Omega(n)}
     \end{align*}
 \end{proof}
 \end{document}
